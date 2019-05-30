@@ -1,0 +1,22 @@
+{
+  "name": "RelatedData",
+  "platform": "HTML",
+  "version": "2.12",
+  "wabVersion": "2.12",
+  "author": "Leo Liu",
+  "description": "This is the sample widget showing related data from a feature layer.",
+  "copyright": "",
+  "license": "http://www.apache.org/licenses/LICENSE-2.0",
+  "properties":{
+    "id":"RelatedDataWidget",
+    "position": {
+      "left": -1000,
+      "bottom": 0,
+      "relativeTo": "broswer"
+    }
+  },
+  "featureActions": [{
+    "name": "ShowRelatedData",
+    "uri": "ShowRelatedDataAction"
+  }]
+}
