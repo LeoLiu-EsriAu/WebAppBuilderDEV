@@ -1,0 +1,712 @@
+<div class="content"> 
+    <div>
+        <div data-dojo-type="dijit/form/Button" data-dojo-attach-event="click:_addDMA" >Create New Assessment</div>
+        <div data-dojo-type="dijit/form/Button" data-dojo-attach-event="click:_saveDMA" >Save Assessments</div>
+    </div>
+    <br>
+    <div data-dojo-attach-point="DMAPanel">
+        <div style = "display: inline-block;">
+            <table>
+                <tr>
+                    <td>
+                        <div data-dojo-attach-point="Subject">
+                            <label>Subject: </label>
+                            <select data-dojo-type="dijit/form/Select" data-dojo-attach-point="selectSubject">
+                                <option value="opportunity" selected="selected">OPPORTUNITY</option>
+                                <option value="permit" selected="selected">PERMIT</option>
+                            </select>    
+                        </div> 
+                    </td>
+                    <td>
+                        <div data-dojo-attach-point="Recommendation">
+                            <label>Recommendation Type: </label>
+                            <select data-dojo-type="dijit/form/Select" data-dojo-attach-point="selectRecommendation">
+                                <option value="Farm-in (Drilling)" selected="selected">FARM-IN (DRILLING)</option>
+                                <option value="Farm-in (Seismic)">FARM-IN (SEISMIC)</option>
+                                <option value="Farm-out">FARM-OUT</option>
+                                <option value="Drilling">DRILLING</option>
+                                <option value="Seismic Aquisition">SEISMIC AQUISITION</option>
+                                <option value="Relingquishment">RELINGQUISHMENT</option>
+                                <option value="Bidding">BIDDING</option>
+                                <option value="Studies (JSA)">STUDIES (JSA)</option>
+                            </select>
+                        </div> 
+                    </td>
+                    <td>
+                        <div data-dojo-attach-point="Reviewer">
+                            <label>Reviewer: </label>
+                            <input data-dojo-type="dijit/form/TextBox" readOnly="true" id="reviewerName"  data-dojo-attach-point="reviewerName" />                
+                        </div>  
+                    </td>
+                </tr>
+            </table>
+                     
+        </div>  
+        <br> 
+        <div data-dojo-attach-point="DMAQuestionsForm" data-dojo-type="dijit/form/Form">
+            <!--
+            <div>
+                <label>Metric: </label>
+                <select data-dojo-type="dijit/form/Select" data-dojo-attach-point="selectedMetric">
+                    <option value="Strategy & Budget" selected="selected">Strategy & Budget</option>
+                    <option value="Exploration Portfolio Fit">Exploration Portfolio Fit</option>
+                    <option value="Development Concept">Development Concept</option>
+                    <option value="Technical/Subsurface" >Technical/Subsurface</option>
+                    <option value="Above Ground" >Above Ground</option>
+                    <option value="Commercial">Commercial</option>
+                </select>    
+            </div>
+            -->
+            <br>
+            <span style="font-size: 13px">Please answer the questions below for each metric, and then click 'Add Metrics' button. </span>
+            <br>
+            <table id = "questionsTable" class='questionsTable' >
+                <tr class = 'questionsTable-thead'>
+                    <th style="width: 15%">Metric</th>
+                    <th style="width: 55%">Questions</th>
+                    <th style="width: 170px; min-width:170px">Answers</th>
+                    <th style="width: 20%">Comment</th>
+                </tr>
+                <!--Strategy & Budget: SB-->
+                <tr>
+                    <th rowspan="4" class="questionTable-cell" ><div>Strategy & Budget</div></th>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT have a future work program that offers staged flexibility to exit prior to significant activity/expenditure?</label>                    
+                    </td>
+                    <td class="questionTable-cell" >
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedSBQ1" 
+                            title="Yes = subject is immature and has staged exit points OR the subject has no exit points but is sufficiently mature to warrant significant activity/expenditure. 
+No = subject is immature with no exit points prior to significant activity/expenditure."
+                            data-dojo-props="required:true">
+                            <option value="" selected="selected">---</option>                            
+                            <option value="5">YES</option>
+                            <option value="1">NO</option>
+                        </select> 
+                    </td>
+                    <th class="questionTable-cell" rowspan="4">
+                        <textarea data-dojo-type="dijit/form/SimpleTextarea" 
+                            data-dojo-attach-point="textAreaSB"  
+                            maxLength="1000" 
+                            name="Comment" rows="10" 
+                            class="textareaComment"
+                            title="Input your comment here."></textarea>                        
+                    </th>
+                </tr>
+                <tr>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT align with Woodside's corporate strategy?</label>
+                    </td>
+                    <td class="questionTable-cell">
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedSBQ2"
+                            title = "Yes = Supports cashflow requirements 2023 to 2025 during major Browse & Scarborough execution phase (e.g. cashflow forecast in this period, and/or minimal expex/capex 2023 to 2025) AND fast to FID (<4 years); 
+Possible = Forecast high level expex/capex in 2023 to 2025, however potential to mitigate through options (sell/defer/dilute), partnering or new technology AND  fast to FID; 
+No = Does not support cashflow requirements 2023 to 2025 (e.g. no cashflow forecast in this period and onerous expex/capex 2023 to 2025) AND slow to FID (>4 years)">
+                            <option value="-1" selected="selected">---</option>  
+                            <option value="5">YES</option>
+                            <option value="3">POSSIBLE</option>
+                            <option value="1">NO</option>
+                        </select> 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT support an established, emerging or future growth hubs?</label>
+                    </td>
+                    <td class="questionTable-cell">
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedSBQ3"
+                            title = "Established = Existing Woodside production eg. NWS Australia. 
+Emerging = Existing Woodside discoveries (2C booked), eg Myanmar, Senegal. 
+Future Growth = no Woodside discoveries (2C booked) but with future discovery potential (held asset or new opportunity).">
+                            <option value="-1" selected="selected">---</option>  
+                            <option value="5">ESTABLISHED</option>
+                            <option value="3">EMERGING</option>
+                            <option value="1">FUTURE GROWTH</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT align with Woodside's working interest guidelines and fit within current budget cycle constraints?</label>                                                     
+                    </td>
+                    <td class="questionTable-cell">
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedSBQ4"
+                            title="Yes = fully funded from or accomodated within existing budget AND proposed equity fits within the guidelines (15-50% WI) or there is a strategy in place to mitigate (eg farm-down); 
+No = signifcant unallocated funds required (>US$5M) OR proposed equity does not fit within the guidelines (15-50% WI) and there is no strategy in place to mitigate.">
+                            <option value="-1" selected="selected">---</option>  
+                            <option value="5">YES</option>
+                            <option value="2">NO</option>
+                        </select> 
+                    </td>
+                </tr>
+                <!--Exploration Portfolio Fit: EPF-->
+                <tr>
+                    <th rowspan="4" class="questionTable-cell" ><div>Exploration Portfolio Fit</div></th>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT contain a predicted hydrocarbon phase consistent with nearby producing fields/infrastructure capability?</label>                    
+                    </td>
+                    <td class="questionTable-cell" >
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedEPFQ1" 
+                            title="Yes = predicted hydrocarbon phase is consistent with nearby producing fields/infrastructure capability.
+No = predicted hydrocarbon phase is not consistent with nearby producing fields/infrastructure capability.">
+                            <option value="-1" selected="selected">---</option>                              
+                            <option value="6">YES</option>
+                            <option value="1">NO</option>
+                        </select> 
+                    </td>
+                    <th class="questionTable-cell" rowspan="4">
+                        <textarea data-dojo-type="dijit/form/SimpleTextarea" 
+                            data-dojo-attach-point="textAreaEPF"  
+                            maxLength="1000" 
+                            name="Comment" rows="10" 
+                            class="textareaComment"
+                            title="Input your comment here."></textarea>                        
+                    </th>
+                </tr>
+                <tr>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT support current basin maturity balance in the exploration portfolio?</label>
+                    </td>
+                    <td class="questionTable-cell">
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedEPFQ2"
+                            title = "Yes =  opportunity resides within an emerging basin, OR a frontier basin with DHI support, pre-drill exit points, low level spend and a clear commercialization strategy, OR a mature Basin adjacent to existing Woodside infrastrucutre; 
+No =: opportunity resides within a frontier basin without the aforementioned exceptions OR a mature basin outside of Australia (NWS/Pluto etc). 
+*Please note that this question relates to BASIN maturity, not PLAY maturity. Refer to the Basin Maturity Definitions tab for additional guidance.">
+                            <option value="-1" selected="selected">---</option>          
+                            <option value="4">YES</option>
+                            <option value="1">NO</option>
+                        </select> 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT increase diversity in the exploration portfolio?</label>
+                    </td>
+                    <td class="questionTable-cell">
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedEPFQ3"
+                            title = "Yes = new basin or, a new play/geologcical concept in an existing basin in the portfolio. 
+No = will not add a new basin or, a new play/geolgocical concept to the portfolio.">
+                        <option value="-1" selected="selected">---</option>  
+                        <option value="4">YES</option>
+                        <option value="1">NO</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT have the potential to contribute signifcantly to the net risked recoverable portfolio volume?</label>                                                     
+                    </td>
+                    <td class="questionTable-cell">
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedEPFQ4"
+                            title="Yes = offers single prospects/leads/concepts/pools with >75mmboe MSV, 
+Moderate = offers single prospects/leads/concepts/pools with 25-75mmboe MSV, 
+No = offers single prospects/leads/concepts/pools with <25mmboe MSV.">
+                            <option value="-1" selected="selected">---</option>  
+                            <option value="6">YES</option>
+                            <option value="3">MODERATE</option>
+                            <option value="1">NO</option>
+                        </select> 
+                    </td>
+                </tr>
+                <!--Development Concept: DC-->
+                <tr>
+                    <th rowspan="4" class="questionTable-cell" ><div>Development Concept</div></th>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT have an expected high, moderate or low subsurface complexity?</label>                    
+                    </td>
+                    <td class="questionTable-cell" >
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedDCQ1" 
+                            title="The subsurface complexity illustrates the likely complexity of the development from a subsurface perspective based on the available information and in a geological success case. 
+It addresses risks and opportunities such as:  
+  1.Structural and stratigraphic complexities; 
+  2.Reservoir quality and hydrocarbon properties; 
+  3.Drainage plan and recovery mechanism.">
+                            <option value="-1" selected="selected">---</option>  
+                            <option value="1">HIGH</option>
+                            <option value="2">MODERATE</option>
+                            <option value="4">LOW</option>
+                        </select> 
+                    </td>
+                    <th class="questionTable-cell" rowspan="4">
+                        <textarea data-dojo-type="dijit/form/SimpleTextarea" 
+                            data-dojo-attach-point="textAreaDC"  
+                            maxLength="1000" 
+                            name="Comment" rows="10" 
+                            class="textareaComment"
+                            title="Input your comment here."></textarea>                        
+                    </th>
+                </tr>
+                <tr>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT have an expected high, moderate or low development concept complexity & cost?</label>
+                    </td>
+                    <td class="questionTable-cell">
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedDCQ2"
+                            title = "The question characterizes the level of complexity of the opportunity development cases including considerations for:  
+  1.Physical environment: remoteness, metocean and weather conditions, 
+  2.Market regulations and local content requirement, 
+  3.Technical and concept definitions: 
+    D&C complexity, 
+    flow assurance, 
+    well interventions requirements, 
+    process facility complexity.">
+                            <option value="-1" selected="selected">---</option>  
+                            <option value="1">HIGH</option>
+                            <option value="2">MODERATE</option>
+                            <option value="4">LOW</option>
+                        </select> 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT have the potential to be delivered fast to market?</label>
+                    </td>
+                    <td class="questionTable-cell">
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedDCQ3"
+                            title = "The ability to deliver fast to market post discovery is assessed across the following criteria:  
+1.Location; 
+2.Maturity of domestic and regional O&G industry (analogues?);
+3.Ability to progress; 
+4.Domestic development and logistic index, infrastructure, JVP alignment, contractual terms and third party access requirements;
+5.Capability fit: Woodside / Operator / JVPs and Technology maturity of proposed concept.">
+                        <option value="-1" selected="selected">---</option>  
+                        <option value="8">YES</option>
+                        <option value="4">POSIBBLE</option>
+                        <option value="1">NO</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT represent a future company project portfolio and cost fit?</label>                                                     
+                    </td>
+                    <td class="questionTable-cell">
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedDCQ4"
+                            title="The company portfolio resilience question addresses how the development opportunity fits relative to some of Woodside's corporate targets: 
+1.Project supply cost competitiveness (LNG development value chain >< US$6.50/Mmbtu, offshore gas <US$4/MMbtu to plant inlet, offshore oil development cost < US$30/bbl), 
+2.Unit production cost (gas < $4/boe, oil < $18/boe),  
+3.Development concept carbon intensity and project sanction robustness across volumes ranges.">
+                            <option value="-1" selected="selected">---</option>  
+                            <option value="4">YES</option>
+                            <option value="2">POSSIBLE</option>
+                            <option value="1">NO</option>
+                        </select> 
+                    </td>
+                </tr>
+                <!--Technical/Subsurface: TS-->
+                <tr>
+                    <th rowspan="4" class="questionTable-cell" ><div>Technical/Subsurface</div></th>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT have a high, moderate or low geological risk for the primary prospect segment (unrolled-up)?</label>                    
+                    </td>
+                    <td class="questionTable-cell" >
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedTSQ1" 
+                            title="High risk = primary segment GPOS <25%. 
+Moderate risk = primary segment GPOS 25-50%.
+Low risk = primary segment GPOS >50%.">                            
+                            <option value="-1" selected="selected">---</option>  
+                            <option value="0">HIGH</option>
+                            <option value="2.5">MODERATE</option>
+                            <option value="5">LOW</option>
+                        </select> 
+                    </td>
+                    <th class="questionTable-cell" rowspan="4">
+                        <textarea data-dojo-type="dijit/form/SimpleTextarea" 
+                            data-dojo-attach-point="textAreaTS"  
+                            maxLength="1000" 
+                            name="Comment" rows="10" 
+                            class="textareaComment"
+                            title="Input your comment here."></textarea>                        
+                    </th>
+                </tr>
+                <tr>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT have follow up potential?</label>
+                    </td>
+                    <td class="questionTable-cell">
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select"                             
+                            data-dojo-attach-point="selectedTSQ2"
+                            title = "Yes = multiple identified prospects within permit. 
+Possible = additional, but poorly defined leads/concepts within permit or prospects/leads/concepts identifed in adjacent acreage with reasonable possibility of capture. 
+No = single identified prospect only.">
+                            <option value="-1" selected="selected">---</option>  
+                            <option value="5">YES</option>
+                            <option value="2.5">POSSIBLE</option>
+                            <option value="0">NO</option>
+                        </select> 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT have geological risk and volumetric ranges that are well constrained by available data?</label>
+                    </td>
+                    <td class="questionTable-cell">
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedTSQ3"
+                            title = "Yes = multiple near off-set wells + dense 2D/3D;
+Moderate = no or limited well data + coarse/poor quality 2D/3D.
+No = no well data + primarily analogues.">
+                        <option value="-1" selected="selected">---</option>  
+                        <option value="5">YES</option>
+                        <option value="3">MODERATE</option>
+                        <option value="1">NO</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT pose significant operational risks (i.e. HP, HT, severe loss zones, Metocean)?</label>                                                     
+                    </td>
+                    <td class="questionTable-cell">
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedTSQ4"
+                            title="Yes = signifcant operational risks are expected.
+Possible = insufficient data to adequately assess risk.
+No = signifcant operational risks are not expected.">
+                            <option value="-1" selected="selected">---</option>  
+                            <option value="0">YES</option>
+                            <option value="2.5">MODERATE</option>
+                            <option value="5">NO</option>
+                        </select> 
+                    </td>
+                </tr>
+                <!--Above Ground: AG-->
+                <tr>
+                    <th rowspan="4" class="questionTable-cell" ><div>Above Ground</div></th>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT reside within a country where country entry has been approved?</label>                    
+                    </td>
+                    <td class="questionTable-cell" >
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedAGQ1" 
+                            title="Yes = country entry has been approved.
+No = country entry is not currently approved.">
+                            <option value="-1" selected="selected">---</option>  
+                            <option value="4">YES</option>
+                            <option value="1">NO</option>
+                        </select> 
+                    </td>
+                    <th class="questionTable-cell" rowspan="4">
+                        <textarea data-dojo-type="dijit/form/SimpleTextarea" 
+                            data-dojo-attach-point="textAreaAG"  
+                            maxLength="1000" 
+                            name="Comment" rows="10" 
+                            class="textareaComment"
+                            title="Input your comment here."></textarea>                        
+                    </th>
+                </tr>
+                <tr>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT reside within a country where Woodside is currently active (assuming country entry has been approved)?</label>
+                    </td>
+                    <td class="questionTable-cell">
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedAGQ2"
+                            title = "Yes = Woodside is actively working in-country. 
+No = Woodside is not actively working in-country.
+N/A = country entry is not currently approved.">
+                            <option value="-1" selected="selected">---</option>  
+                            <option value="4">YES</option>                            
+                            <option value="1">NO</option>
+                            <option value="1">N/A</option>
+                        </select> 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT reside within a country in which the country entry and/or gap analysis has been recently evaluated?</label>
+                    </td>
+                    <td class="questionTable-cell">
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedAGQ3"
+                            title = "Yes = country entry initial assessment/gap analysis still valid.
+Moderate = country entry initial assessment/gap analysis evaluated within the last 1-3 years.
+No = country entry initial assessment/gap analysis has not been evaluated within the last 3 years.">
+                        <option value="-1" selected="selected">---</option>  
+                        <option value="4">YES</option>
+                        <option value="2">MODERATE</option>
+                        <option value="0">NO</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT reside within a country with an acceptable above ground risk rating, or where risks can be appropriately mitigated?</label>                                                     
+                    </td>
+                    <td class="questionTable-cell">
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedAGQ4"
+                            title="Yes = exploration global risk profile with a low rating and no possibility of significant reputational damage, OR where there is high confidence that identified risks can be confidently mitigated. 
+Moderate = exploration global risk profile with a moderate rating OR moderate possibility of significant reputational damage, OR where there is moderate confidence that identified risks can be mitigated.  
+No = exploration global risk profile with a high rating OR strong possibility of significant reputational damage AND where there is low confidence that identified risks can be mitigated.">
+                            <option value="-1" selected="selected">---</option>  
+                            <option value="8">YES</option>
+                            <option value="4">MODERATE</option>
+                            <option value="0">NO</option>
+                        </select> 
+                    </td>
+                </tr>
+                <!--Commercial: CM-->
+                <tr>
+                    <th rowspan="4" class="questionTable-cell" ><div>Commercial</div></th>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT return or contain an opportunity with an EPOS>20% and EMV/DrillEx >1.5?</label>                    
+                    </td>
+                    <td class="questionTable-cell" >
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedCMQ1" 
+                            title="Yes = EPOS >20% AND EMV/DrillEx >1.5.
+Possible = EPOS <20% AND/OR EMV/DrillEx <1.5 however potential to exceed both thresholds through aggregation or other mechanism.
+No = EPOS <20% AND EMV/DrillEx <1.5 with no possibility to exceed through aggregation or other mechanism. ">
+                            <option value="-1" selected="selected">---</option>  
+                            <option value="8">YES</option>
+                            <option value="4">POSSIBLE</option>
+                            <option value="0">NO</option>
+                        </select> 
+                    </td>
+                    <th class="questionTable-cell" rowspan="4">
+                        <textarea data-dojo-type="dijit/form/SimpleTextarea" 
+                            data-dojo-attach-point="textAreaCM"  
+                            maxLength="1000" 
+                            name="Comment" rows="10" 
+                            class="textareaComment"
+                            title="Input your comment here."></textarea>                        
+                    </th>
+                </tr>
+                <tr>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT return or contain an opportunity with success case economics for the MSV scenario that meet all corporate investment thresholds at $65/bbl?</label>
+                    </td>
+                    <td class="questionTable-cell">
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select"
+                            data-dojo-attach-point="selectedCMQ2"
+                            title = "Yes = project VIR > 0.25 + IRR >15%, 
+Most = exceeds 1 of 2 corporate investment thresholds.
+No = exceeds no corporate investment thresholds">
+                            <option value="-1" selected="selected">---</option>                            
+                            <option value="4">YES</option>                            
+                            <option value="2">MOST</option>
+                            <option value="0">NO</option>
+                        </select> 
+                    </td>
+                </tr>
+                <tr>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT return or contain an opportunity with success case economics for the MSV scenario robust to all key uncertainties?</label>
+                    </td>
+                    <td class="questionTable-cell">
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedCMQ3"
+                            title = "Yes = robust across price, CAPEX and OPEX sensitivites.
+Most = robust across 2 of 3 key uncertainties.
+No = robust across only one or no key uncertainties">
+                        <option value="-1" selected="selected">---</option>  
+                        <option value="4">YES</option>
+                        <option value="2">MOST</option>
+                        <option value="0">NO</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="questionTable-cell">
+                        <label>Does the PROSPECT have fiscal and broader commercial terms that are required for commerciality sufficiently defined, and legally robust?</label>                                                     
+                    </td>
+                    <td class="questionTable-cell">
+                        <select class="questionSelectBox" 
+                            data-dojo-type="dijit/form/Select" 
+                            data-dojo-attach-point="selectedCMQ4"
+                            title="Yes = commercial terms are well defined and legally robust.
+No = commercial terms are poorly defined or not yet agreed and legally exposed.">
+                            <option value="-1" selected="selected">---</option>  
+                            <option value="4" >YES</option>
+                            <option value="2">NO</option>
+                        </select> 
+                    </td>
+                </tr>
+            </table>         
+        </div>   
+        <br>
+        <div data-dojo-type="dijit/form/Button" data-dojo-attach-event="click:_calculate" >Calculate</div>
+        <div data-dojo-attach-point="DMAScores" style = "padding: 2px;">
+            <table id="DMAScores" class="scoreTable">
+                <tr class="scoreTable-thead">
+                    <th style="width:30%">Metrics</th>
+                    <th style="width:10%">Q1</th>
+                    <th style="width:10%">Q2</th>
+                    <th style="width:10%">Q3</th>
+                    <th style="width:10%">Q4</th>
+                    <th style="width:30%">Total</th>
+                </tr>
+                <tr style="border:1px solid grey"> 
+                    <td>Strategy & Budget</td>
+                    <td data-dojo-attach-point="scoreSBQ1"></td>
+                    <td data-dojo-attach-point="scoreSBQ2"></td>
+                    <td data-dojo-attach-point="scoreSBQ3"></td>
+                    <td data-dojo-attach-point="scoreSBQ4"></td>
+                    <td data-dojo-attach-point="scoreSBTotal"></td>
+                </tr>
+                <tr style="border:1px solid grey"> 
+                    <td>Exploration Portfolio Fit</td>
+                    <td data-dojo-attach-point="scoreEPFQ1"></td>
+                    <td data-dojo-attach-point="scoreEPFQ2"></td>
+                    <td data-dojo-attach-point="scoreEPFQ3"></td>
+                    <td data-dojo-attach-point="scoreEPFQ4"></td>
+                    <td data-dojo-attach-point="scoreEPFQTotal"></td>
+                </tr>
+                <tr style="border:1px solid grey"> 
+                    <td>Development Concept</td>
+                    <td data-dojo-attach-point="scoreDCQ1"></td>
+                    <td data-dojo-attach-point="scoreDCQ2"></td>
+                    <td data-dojo-attach-point="scoreDCQ3"></td>
+                    <td data-dojo-attach-point="scoreDVQ4"></td>
+                    <td data-dojo-attach-point="scoreDCQTotal"></td>
+                </tr>
+                <tr style="border:1px solid grey"> 
+                    <td>Technical/Subsurface</td>
+                    <td data-dojo-attach-point="scoreTSQ1"></td>
+                    <td data-dojo-attach-point="scoreTSQ2"></td>
+                    <td data-dojo-attach-point="scoreTSQ3"></td>
+                    <td data-dojo-attach-point="scoreTSQ4"></td>
+                    <td data-dojo-attach-point="scoreTSQTotal"></td>
+                </tr>
+                <tr style="border:1px solid grey"> 
+                    <td>Above Ground</td>
+                    <td data-dojo-attach-point="scoreAGQ1"></td>
+                    <td data-dojo-attach-point="scoreAGQ2"></td>
+                    <td data-dojo-attach-point="scoreAGQ3"></td>
+                    <td data-dojo-attach-point="scoreAGQ4"></td>
+                    <td data-dojo-attach-point="scoreAGQTotal"></td>
+                </tr>
+                <tr style="border:1px solid grey"> 
+                    <td>Commercial</td>
+                    <td data-dojo-attach-point="scoreCMQ1"></td>
+                    <td data-dojo-attach-point="scoreCMQ2"></td>
+                    <td data-dojo-attach-point="scoreCMQ3"></td>
+                    <td data-dojo-attach-point="scoreCMQ4"></td>
+                    <td data-dojo-attach-point="scoreCMQTotal"></td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div data-dojo-type="dijit/form/Button" data-dojo-attach-event="click:_showSpiderChart" >Display in spider chart</div>
+        <div>
+            <table style="width:100%;">
+                    <tr style=" height:100px">  
+                        <td style="width:25%; max-height:200px;vertical-align: top;" rowspan="2">
+                            <div style="border:1px solid grey;height:200px;padding:5px;margin: 5px">
+                                Notwithstanding/In light of the x, y, z weaknesses/strengths
+                                of the opportunity, the decision to/not to proceed with the 
+                                recommendation has been taken because....
+                                </div>
+                            </td>       
+                        <td style="width:33%; vertical-align: top;" align="center" rowspan="1"> 
+                            <div class="chart-comment-container" >
+                                <div class="chart-comment-title">
+                                    <Strong >Strong</Strong>
+                                </div>
+                                <div class="chart-comment-content">
+                                    Input comments pertinent to the Strategy & Assessment
+                                </div>
+                            </div>
+                        </td>
+                        <td style="vertical-align: top;" rowspan="2">
+                            <div style="border:1px solid grey;padding:5px;margin:5px;height:150px">
+                                Current State.......................................................<br>
+                                Potential Future State..........................................<br>            
+                                Not all data available or more data may<br>
+                                become available that may impact assessment....
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="height:160px">
+                        <td rowspan='4' style="width:33%; max-width:33%;max-height:600px">
+                            <div  data-dojo-attach-point="radarChartNode" >	
+                                <div class="radarChartContainer"> 
+                                    <canvas width="700" height="600" id="radarChartCanvas" ></canvas>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="height: 150px;vertical-align: top ">
+                        <td >
+                            <div class="chart-comment-container">
+                                <div class="chart-comment-title"><Strong >Strong</Strong></div>
+                                <div class="chart-comment-content">Input comments pertinent to the Strategy & Assessment</div>
+                            </div>
+                        </td>
+                        <td >
+                            <div class="chart-comment-container">
+                                <div class="chart-comment-title"><Strong >Strong</Strong></div>
+                                <div class="chart-comment-content">Input comments pertinent to the Strategy & Assessment</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="height: 110px;">            
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                    <tr style="vertical-align: top; height: 150px">
+                        <td >
+                            <div class="chart-comment-container">
+                                <div class="chart-comment-title"><Strong >Strong</Strong></div>
+                                <div class="chart-comment-content">Input comments pertinent to the Strategy & Assessment</div>
+                            </div>
+                        </td>
+                        <td >
+                            <div class="chart-comment-container">
+                                <div class="chart-comment-title"><Strong >Strong</Strong></div>
+                                <div class="chart-comment-content">Input comments pertinent to the Strategy & Assessment</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr style="border:1px solid grey; height: 150px">            
+                        <td > </td>
+                        <td align="center" >
+                            <div class="chart-comment-container">
+                                <div class="chart-comment-title"><Strong >Strong</Strong></div>
+                                <div class="chart-comment-content">Input comments pertinent to the Strategy & Assessment</div>
+                            </div>
+                        </td>
+                        <td > </td>
+                    </tr>
+                </table>            
+        </div>
+    </div>
+    
+
+</div>

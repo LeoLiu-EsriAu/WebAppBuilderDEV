@@ -1,0 +1,113 @@
+
+/* 
+[title]:hover:after{
+  content: attr(title);
+  background:yellow;
+  padding: 5px;
+  border:1px solid;
+} */
+
+.jimu-widget-DMACapture{
+  min-width: 1300px;
+}
+
+.jimu-widget-DMACapture .textareaComment{
+  height: 100%;
+  width: 100%;
+   /* margin: 5px; */
+}
+
+ .jimu-widget-DMACapture .questionsTable{
+    width:100%;
+    padding:2px;
+    overflow-x:hidden;
+    overflow-y:auto;
+    height: auto;
+    position: relative;
+    border-collapse:collapse;
+    table-layout:fixed;
+    border: 2px solid #CCCCCC; /* 2px for displaying left and bottom border in IE*/
+  }
+
+  .jimu-widget-DMACapture .questionsTable .questionsTable-thead > th {
+    width:100%;
+    height:36px;
+    background-color: #EEEEEE;
+    overflow:hidden;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 2px;
+    min-width: 146px;
+  }
+
+  .jimu-widget-DMACapture .questionsTable .questionTable-cell 
+  {
+    padding:2px;
+    border-collapse:collapse;
+    border: 1px solid #CCCCCC;
+    font-size: 15px;
+    /* min-width: 146px; */
+  }
+
+  .jimu-widget-DMACapture .radarChartContainer {
+    /* position: relative; */
+    width:100%; 
+    /* max-width: 650px;  */
+    height: 100%;
+  }  
+
+  .jimu-widget-DMACapture .questionSelectBox{
+    width: 166px; 
+    min-width:166px;
+  }
+
+  .jimu-widget-DMACapture .scoreTable{
+    width:100%;
+    padding:5px;
+    overflow-x:hidden;
+    overflow-y:auto;
+    height: auto;
+    position: relative;
+    border-collapse:collapse;
+    table-layout:fixed;
+    border: 2px solid #CCCCCC; /* 2px for displaying left and bottom border in IE*/
+    font-size: 15px;
+  }
+
+  .jimu-widget-DMACapture .scoreTable-thead > th {
+    width:100%;
+    height:36px;
+    background-color: #EEEEEE;
+    overflow:hidden;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 2px;
+    min-width: 146px;
+  }
+
+  .jimu-widget-DMACapture .chart-comment-container{
+    width:370px;
+  }
+
+  .jimu-widget-DMACapture .chart-comment-title{
+    border:1px solid grey;
+    margin:2px;
+    text-align: left;
+    padding:5px;
+  }
+
+  .jimu-widget-DMACapture .chart-comment-content{
+    border:1px solid grey;
+    height: 100px;
+    margin:2px;
+    text-align: left;
+    padding:5px
+  }
+  /* .jimu-widget-DMACapture .radarChartCanveas {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%; */
+    /* margin-right: -50%;
+    transform: translate(-50%, -50%) 
+  }*/

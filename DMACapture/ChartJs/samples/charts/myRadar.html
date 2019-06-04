@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Radar Chart</title>
+	<script src="../../Chart.min.js"></script>
+	<!--<script src="../utils.js"></script>-->
+	<style>
+		canvas {
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div style="width:60%">
+		<canvas id="canvas"></canvas>
+	</div>
+	<script>
+		var randomScalingFactor = function() {
+			return Math.round(Math.random() * 100);
+		};
+
+		var color = Chart.helpers.color;
+		var config = {
+			type: 'radar',
+			data: {
+				labels: ['Strategy & Budget', 'Exploration Portfolio Fit', 'Development Concept', 'Technical/Subsurface', 'Above Ground', 'Commercial'],
+				datasets: [{
+					label: 'DMA1',
+					backgroundColor: color('rgb(255, 99, 132)').alpha(0.2).rgbString(),
+					borderColor: 'rgb(255, 99, 132)',
+					pointBackgroundColor: 'rgb(255, 99, 132)',
+					data: [
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor()
+					]
+				}, {
+					label: 'DMA2',
+					backgroundColor: color('rgb(54, 162, 235)').alpha(0.2).rgbString(),
+					borderColor: 'rgb(54, 162, 235)',
+					pointBackgroundColor: 'rgb(54, 162, 235)',
+					data: [
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor(),
+						randomScalingFactor()
+					]
+				}]
+			},
+			options: {
+				legend: {
+					position: 'top',
+				},
+				title: {
+					display: true,
+					text: 'Decision Metrics Assessment Tool'
+				},
+				scale: {
+					ticks: {
+						beginAtZero: true
+					}
+				}
+			}
+		};
+
+		window.onload = function() {
+			window.myRadar = new Chart(document.getElementById('canvas'), config);
+		};		
+	</script>
+</body>
+
+</html>
